@@ -64,14 +64,6 @@ export default function WaveSurferComponent({
     // Register regions plugin and set region
     const regionsPlugin = RegionsPlugin.create();
     wsRef.current.registerPlugin(regionsPlugin);
-    const region = regionsPlugin.addRegion({
-      start: abMarkers.a,
-      end: abMarkers.b,
-      color: "rgba(34,197,94,0.3)",
-      drag: false,
-      resize: false,
-      id: 'ab-region',
-    });
     wsRef.current.load(audioUrl);
     wsRef.current.on("ready", () => {
       setAbMarkers({ a: 0, b: wsRef.current?.getDuration() || 0 });
@@ -157,7 +149,7 @@ export default function WaveSurferComponent({
   }, [isLooping, abMarkers, repeatCount]);
 
   // Drag marker logic
-  const handleMarkerDrag = (type: "a" | "b", _e: React.TouchEvent | React.MouseEvent) => {
+  const handleMarkerDrag = (type: "a" | "b") => {
     if (!wsRef.current) return;
     const bounding = waveRef.current?.getBoundingClientRect();
     if (!bounding) return;
@@ -224,8 +216,8 @@ export default function WaveSurferComponent({
               ref={markerARef}
               className="absolute top-0 h-full w-4 flex flex-col items-center justify-center z-10"
               style={{ left: getMarkerLeft(abMarkers.a), transform: "translateX(-50%)" }}
-              onMouseDown={draggableMarkers ? (e) => handleMarkerDrag("a", e) : undefined}
-              onTouchStart={draggableMarkers ? (e) => handleMarkerDrag("a", e) : undefined}
+              onMouseDown={draggableMarkers ? () => handleMarkerDrag("a") : undefined}
+              onTouchStart={draggableMarkers ? () => handleMarkerDrag("a") : undefined}
             >
               <div className="w-3 h-16 bg-green-600 rounded shadow-lg border-2 border-white flex items-center justify-center">
                 <span className="text-xs font-bold text-white select-none">A</span>
@@ -236,8 +228,8 @@ export default function WaveSurferComponent({
               ref={markerBRef}
               className="absolute top-0 h-full w-4 flex flex-col items-center justify-center z-10"
               style={{ left: getMarkerLeft(abMarkers.b), transform: "translateX(-50%)" }}
-              onMouseDown={draggableMarkers ? (e) => handleMarkerDrag("b", e) : undefined}
-              onTouchStart={draggableMarkers ? (e) => handleMarkerDrag("b", e) : undefined}
+              onMouseDown={draggableMarkers ? () => handleMarkerDrag("b") : undefined}
+              onTouchStart={draggableMarkers ? () => handleMarkerDrag("b") : undefined}
             >
               <div className="w-3 h-16 bg-green-700 rounded shadow-lg border-2 border-white flex items-center justify-center">
                 <span className="text-xs font-bold text-white select-none">B</span>
