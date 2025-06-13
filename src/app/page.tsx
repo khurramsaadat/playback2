@@ -6,9 +6,10 @@ import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import type { ComponentType } from "react";
 import { PlayIcon, PauseIcon, StopIcon, BackwardIcon, ForwardIcon } from '@heroicons/react/24/solid';
+import type { WaveSurferComponentProps } from "../components/WaveSurferComponent";
 
 const WaveSurferComponent = dynamic(() =>
-  import("../components/WaveSurferComponent") as Promise<{ default: ComponentType<any> }>
+  import("../components/WaveSurferComponent") as Promise<{ default: ComponentType<WaveSurferComponentProps> }>
 , { ssr: false });
 
 export default function Home() {

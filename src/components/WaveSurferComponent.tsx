@@ -20,6 +20,8 @@ interface WaveSurferComponentProps {
   onCenterHandled?: () => void;
 }
 
+export type { WaveSurferComponentProps };
+
 export default function WaveSurferComponent({
   audioUrl,
   abMarkers,
@@ -62,7 +64,7 @@ export default function WaveSurferComponent({
     // Register regions plugin and set region
     const regionsPlugin = RegionsPlugin.create();
     wsRef.current.registerPlugin(regionsPlugin);
-    let region = regionsPlugin.addRegion({
+    const region = regionsPlugin.addRegion({
       start: abMarkers.a,
       end: abMarkers.b,
       color: "rgba(34,197,94,0.3)",
@@ -155,7 +157,7 @@ export default function WaveSurferComponent({
   }, [isLooping, abMarkers, repeatCount]);
 
   // Drag marker logic
-  const handleMarkerDrag = (type: "a" | "b", e: React.TouchEvent | React.MouseEvent) => {
+  const handleMarkerDrag = (type: "a" | "b", _e: React.TouchEvent | React.MouseEvent) => {
     if (!wsRef.current) return;
     const bounding = waveRef.current?.getBoundingClientRect();
     if (!bounding) return;
