@@ -16,4 +16,9 @@
   - ...
 - Added public/_redirects for Netlify SPA fallback.
 - Added MIT LICENSE file.
-- Updated README.md with Netlify deployment instructions and badge placeholder. 
+- Updated README.md with Netlify deployment instructions and badge placeholder.
+- Updated playback controls in src/app/page.tsx to use icons with tooltips for Start, Play, Pause, Stop, and End (ForwardIcon).
+- Styled icons with Tailwind for size/color consistency.
+- Added tooltips for accessibility and UX.
+- Fixed all TypeScript and linting errors in src/components/WaveSurferComponent.tsx (removed any, used unknown for plugin types, removed unused variables).
+- Ready for Netlify deployment and GitHub push. 

@@ -96,15 +96,15 @@ export default function WaveSurferComponent({
   // Update region when abMarkers change
   useEffect(() => {
     if (!wsRef.current) return;
-    const regionsPlugin = wsRef.current.getActivePlugins().find((p: any) => p.addRegion);
+    const regionsPlugin = wsRef.current.getActivePlugins().find((p) => (p as { addRegion?: unknown }).addRegion);
     if (!regionsPlugin) return;
     // Remove the old region
-    const oldRegion = (regionsPlugin as any).getRegions().find((r: any) => r.id === 'ab-region');
+    const oldRegion = (regionsPlugin as unknown as { getRegions: () => { id: string; remove: () => void }[] }).getRegions().find((r) => r.id === 'ab-region');
     if (oldRegion) {
       oldRegion.remove();
     }
     // Add the new region
-    (regionsPlugin as any).addRegion({
+    (regionsPlugin as unknown as { addRegion: (opts: object) => void }).addRegion({
       start: abMarkers.a,
       end: abMarkers.b,
       color: "rgba(34,197,94,0.3)",
@@ -159,9 +159,9 @@ export default function WaveSurferComponent({
     if (!wsRef.current) return;
     const bounding = waveRef.current?.getBoundingClientRect();
     if (!bounding) return;
-    const getX = (ev: any) => (ev.touches ? ev.touches[0].clientX : ev.clientX);
+    const getX = (ev: TouchEvent | MouseEvent) => ("touches" in ev ? (ev as TouchEvent).touches[0].clientX : (ev as MouseEvent).clientX);
     const duration = wsRef.current.getDuration();
-    const onMove = (ev: any) => {
+    const onMove = (ev: TouchEvent | MouseEvent) => {
       const x = getX(ev) - bounding.left;
       let percent = x / bounding.width;
       percent = Math.max(0, Math.min(1, percent));
@@ -169,14 +169,14 @@ export default function WaveSurferComponent({
       setAbMarkers({ ...abMarkers, [type]: time });
     };
     const onUp = () => {
-      window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("mousemove", onMove as EventListener);
       window.removeEventListener("mouseup", onUp);
-      window.removeEventListener("touchmove", onMove);
+      window.removeEventListener("touchmove", onMove as EventListener);
       window.removeEventListener("touchend", onUp);
     };
-    window.addEventListener("mousemove", onMove);
+    window.addEventListener("mousemove", onMove as EventListener);
     window.addEventListener("mouseup", onUp);
-    window.addEventListener("touchmove", onMove);
+    window.addEventListener("touchmove", onMove as EventListener);
     window.addEventListener("touchend", onUp);
   };
 

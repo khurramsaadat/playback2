@@ -130,19 +130,29 @@ export default function Home() {
             </button>
             {/* Main Controls */}
             <Button size="sm" variant="outline" onClick={() => { if (videoRef.current) videoRef.current.currentTime = 0; }} disabled={!audioUrl} aria-label="Go to Start">
-              Start
+              <span className="tooltip" data-tooltip="Start">
+                <BackwardIcon className="w-5 h-5" />
+              </span>
             </Button>
             <Button size="sm" variant="outline" onClick={() => { if (videoRef.current) videoRef.current.play(); }} disabled={!audioUrl} aria-label="Play">
-              Play
+              <span className="tooltip" data-tooltip="Play">
+                <PlayIcon className="w-5 h-5" />
+              </span>
             </Button>
             <Button size="sm" variant="outline" onClick={() => { if (videoRef.current) videoRef.current.pause(); }} disabled={!audioUrl} aria-label="Pause">
-              Pause
+              <span className="tooltip" data-tooltip="Pause">
+                <PauseIcon className="w-5 h-5" />
+              </span>
             </Button>
             <Button size="sm" variant="outline" onClick={() => { if (videoRef.current) { videoRef.current.pause(); videoRef.current.currentTime = 0; } }} disabled={!audioUrl} aria-label="Stop">
-              Stop
+              <span className="tooltip" data-tooltip="Stop">
+                <StopIcon className="w-5 h-5" />
+              </span>
             </Button>
             <Button size="sm" variant="outline" onClick={() => { if (videoRef.current && duration) videoRef.current.currentTime = duration; }} disabled={!audioUrl} aria-label="Go to End">
-              End
+              <span className="tooltip" data-tooltip="End">
+                <ForwardIcon className="w-5 h-5" />
+              </span>
             </Button>
             <Button size="sm" variant={isLooping ? "default" : "outline"} className="bg-green-600 hover:bg-green-700 text-white" onClick={() => setIsLooping((v) => !v)} disabled={!audioUrl} aria-label="Play A-B Loop">
               {isLooping ? "Stop A-B Loop" : "Play A-B Loop"}
